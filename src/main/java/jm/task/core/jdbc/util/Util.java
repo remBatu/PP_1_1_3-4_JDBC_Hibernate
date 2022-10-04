@@ -10,12 +10,12 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/task_1.1.3";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    Connection connection = null;
+    static Connection connection = null;
 
     public Util() {
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         try {
             if (connection==null || connection.isClosed()){
                 createConnection();
@@ -25,11 +25,12 @@ public class Util {
         }
         return connection;
     }
-    private void createConnection() {
+    private  static void createConnection() {
         try {
             Driver driver = new com.mysql.cj.jdbc.Driver();
             DriverManager.registerDriver(driver);
             connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
